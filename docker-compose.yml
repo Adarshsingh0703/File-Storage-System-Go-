@@ -1,0 +1,27 @@
+services:
+  app:
+    build: .  # Build the Go app from the Dockerfile in the current directory
+    ports:
+      - "8080:8080"  # Expose the Go app at localhost:8080
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_PORT: "5432"
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Adsinghraj1@
+      POSTGRES_DB: filedb
+    depends_on:
+      - db  # Ensure the Go app starts after the PostgreSQL container
+
+  db:
+    image: postgres:13  # Use the official PostgreSQL image
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Adsinghraj1@  
+      POSTGRES_DB: filedb
+    ports:
+      - "5432:5432"  # Expose PostgreSQL on localhost:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Volume for PostgreSQL data
+
+volumes:
+  postgres_data:  # Define the volume for database data
